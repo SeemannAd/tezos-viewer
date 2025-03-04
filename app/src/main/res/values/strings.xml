@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">tezos-viewer</string>
+    <string name="splash_screen">splash</string>
+    <string name="home_screen">home</string>
+</resources>
