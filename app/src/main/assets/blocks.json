@@ -1,0 +1,77 @@
+[
+    {
+        "cycle": 1,
+        "level": 1,
+        "priority": "0",
+        "hash": "BLockHash1",
+        "timestamp": "2023-01-01T00:00:00Z",
+        "proto": 1,
+        "validations": 3,
+        "deposit": 1000,
+        "reward": 1500,
+        "baker": {
+            "alias": "Baker1",
+            "address": "tz1BakerAddress1"
+        }
+    },
+    {
+        "cycle": 1,
+        "level": 2,
+        "priority": "0",
+        "hash": "BLockHash2",
+        "timestamp": "2023-01-01T01:00:00Z",
+        "proto": 1,
+        "validations": 2,
+        "deposit": 1200,
+        "reward": 1600,
+        "baker": {
+            "alias": "Baker2",
+            "address": "tz1BakerAddress2"
+        }
+    },
+    {
+        "cycle": 1,
+        "level": 3,
+        "priority": "0",
+        "hash": "BLockHash3",
+        "timestamp": "2023-01-01T02:00:00Z",
+        "proto": 1,
+        "validations": 4,
+        "deposit": 1100,
+        "reward": 1700,
+        "baker": {
+            "alias": "Baker3",
+            "address": "tz1BakerAddress3"
+        }
+    },
+    {
+        "cycle": 1,
+        "level": 4,
+        "priority": "0",
+        "hash": "BLockHash4",
+        "timestamp": "2023-01-01T03:00:00Z",
+        "proto": 1,
+        "validations": 5,
+        "deposit": 1300,
+        "reward": 1800,
+        "baker": {
+            "alias": "Baker4",
+            "address": "tz1BakerAddress4"
+        }
+    },
+    {
+        "cycle": 1,
+        "level": 5,
+        "priority": "0",
+        "hash": "BLockHash5",
+        "timestamp": "2023-01-01T04:00:00Z",
+        "proto": 1,
+        "validations": 6,
+        "deposit": 1400,
+        "reward": 1900,
+        "baker": {
+            "alias": "Baker5",
+            "address": "tz1BakerAddress5"
+        }
+    }
+]

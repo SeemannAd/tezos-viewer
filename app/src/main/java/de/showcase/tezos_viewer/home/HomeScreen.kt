@@ -1,18 +1,27 @@
 package de.showcase.tezos_viewer.home
 
 import Blocks
+import Content
+import android.annotation.SuppressLint
+import android.content.Context
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
-import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.HttpClient
@@ -30,43 +39,55 @@ import timber.log.Timber
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
-    val status by viewModel.status.collectAsState("")
     val blocks by viewModel.blocks.collectAsState(null)
-    val loading by viewModel.loading.collectAsState(false)
-
-    var counter = 0
-
-    LaunchedEffect(Unit) {
-        viewModel.fetchBakers()
-    }
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding),
+                .padding(innerPadding)
         ) {
-            Text(text = viewModel.route)
-            if (loading) {
-                CircularProgressIndicator()
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = viewModel.route,
+                    modifier = Modifier.padding(16.dp)
+                )
             }
 
-            Text(text = "[$counter] $status > bakers found ${blocks?.hash}")
+            LazyColumn(
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(bottom = 16.dp)
+            ) {
+                items(blocks?.size ?: 0) { index ->
+                    BlockItem(blocks!![index])
+                }
+            }
 
+            // Button at the bottom
             Button(
-                enabled = !loading,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 onClick = {
-                    viewModel.fetchBakers()
-                    counter++
-                }) {
-                Text(text = "fetch")
+                    viewModel.fetchFromAssets()
+                }
+            ) {
+                Text(text = "Fetch")
             }
         }
-
     }
 }
 
-class HomeViewModel : ViewModel() {
+@SuppressLint("StaticFieldLeak")
+class HomeViewModel(
+    private val context: Context,
+) : ViewModel() {
     val route = "/home"
 
     private val client = HttpClient(CIO) {
@@ -80,30 +101,55 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    val blocks: MutableStateFlow<Blocks?> = MutableStateFlow(null)
-    val status: MutableStateFlow<String> = MutableStateFlow("n/a")
-    val loading: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val block: MutableStateFlow<Blocks?> = MutableStateFlow(null)
+    val blocks: MutableStateFlow<List<Blocks>?> = MutableStateFlow(null)
 
-    fun fetchBakers() {
+    fun fetchFromAssets() {
         viewModelScope.launch {
             try {
-                loading.value = true
 
+                blocks.value = withContext(Dispatchers.IO) {
+                    val jsonString = context
+                        .assets
+                        .open("blocks.json")
+                        .bufferedReader()
+                        .use { it.readText() }
+
+                    Json.decodeFromString<List<Blocks>>(jsonString)
+                }
+            } catch (e: Exception) {
+                Timber.e("Could not fetch bakers! $e")
+                blocks.value = null
+            }
+        }
+    }
+
+    fun fetchBlocksFromRemote() {
+        viewModelScope.launch {
+            try {
                 val response = withContext(Dispatchers.IO) {
                     client.get("https://api.tzkt.io/v1/blocks")
                 }
 
-                status.value = response.status.value.toString()
-
                 val raw = response.body<ArrayList<Blocks>>().first()
-                blocks.value = raw
+                block.value = raw
             } catch (e: Exception) {
                 Timber.e("Could not fetch bakers! $e")
-                status.value = "Error: ${e.message}"
                 blocks.value = null
             }
-
-            loading.value = false
         }
+    }
+}
+
+@Composable
+fun BlockItem(block: Blocks) {
+    Column(modifier = Modifier.padding(8.dp)) {
+        Text(
+            text = "Block: ${block.priority} ${block.hash} ${block.cycle} ${block.level}",
+            style = MaterialTheme.typography.headlineMedium
+        )
+        Text(text = "Timestamp: ${block.timestamp}")
+        Text(text = "Baker: ${block.baker?.alias} (${block.baker?.address})")
+        Spacer(modifier = Modifier.height(8.dp))
     }
 }
