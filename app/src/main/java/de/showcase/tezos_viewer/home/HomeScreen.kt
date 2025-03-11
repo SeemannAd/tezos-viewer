@@ -1,19 +1,21 @@
 package de.showcase.tezos_viewer.home
 
-import Blocks
-import Content
+import Block
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,7 +23,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.ktor.client.HttpClient
@@ -39,39 +44,29 @@ import timber.log.Timber
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
-    val blocks by viewModel.blocks.collectAsState(null)
+    val blocks by viewModel.blocks.collectAsState(emptyList())
 
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(innerPadding)
+                .padding(innerPadding),
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = viewModel.route,
-                    modifier = Modifier.padding(16.dp)
-                )
-            }
-
             LazyColumn(
                 modifier = Modifier
-                    .weight(1f)
-                    .padding(bottom = 16.dp)
+                    .fillMaxSize()
+                    .padding(12.dp)
             ) {
-                items(blocks?.size ?: 0) { index ->
-                    BlockItem(blocks!![index])
+                if (blocks.isNotEmpty()) {
+                    items(blocks.size) { index ->
+                        BlockCard(block = blocks[index]!!)
+                    }
                 }
             }
 
-            // Button at the bottom
             Button(
                 modifier = Modifier
+                    .align(Alignment.BottomCenter)
                     .fillMaxWidth()
                     .padding(16.dp),
                 onClick = {
@@ -91,6 +86,12 @@ class HomeViewModel(
     val route = "/home"
 
     private val client = HttpClient(CIO) {
+        /*
+        install(JsonFeature) {
+            serializer = KotlinxSerializer() // Use kotlinx.serialization for JSON
+        }
+         */
+
         install(ContentNegotiation) {
             json(
                 Json {
@@ -101,8 +102,8 @@ class HomeViewModel(
         }
     }
 
-    private val block: MutableStateFlow<Blocks?> = MutableStateFlow(null)
-    val blocks: MutableStateFlow<List<Blocks>?> = MutableStateFlow(null)
+    private val block: MutableStateFlow<Block?> = MutableStateFlow(null)
+    val blocks: MutableStateFlow<List<Block?>> = MutableStateFlow(emptyList())
 
     fun fetchFromAssets() {
         viewModelScope.launch {
@@ -115,11 +116,11 @@ class HomeViewModel(
                         .bufferedReader()
                         .use { it.readText() }
 
-                    Json.decodeFromString<List<Blocks>>(jsonString)
+                    Json.decodeFromString<List<Block>>(jsonString)
                 }
             } catch (e: Exception) {
+                //Todo @Dev add error handling
                 Timber.e("Could not fetch bakers! $e")
-                blocks.value = null
             }
         }
     }
@@ -131,25 +132,51 @@ class HomeViewModel(
                     client.get("https://api.tzkt.io/v1/blocks")
                 }
 
-                val raw = response.body<ArrayList<Blocks>>().first()
+                val raw = response.body<ArrayList<Block>>().first()
                 block.value = raw
             } catch (e: Exception) {
+                //Todo @Dev add error handling
                 Timber.e("Could not fetch bakers! $e")
-                blocks.value = null
             }
         }
     }
 }
 
 @Composable
-fun BlockItem(block: Blocks) {
-    Column(modifier = Modifier.padding(8.dp)) {
-        Text(
-            text = "Block: ${block.priority} ${block.hash} ${block.cycle} ${block.level}",
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Text(text = "Timestamp: ${block.timestamp}")
-        Text(text = "Baker: ${block.baker?.alias} (${block.baker?.address})")
-        Spacer(modifier = Modifier.height(8.dp))
+fun BlockCard(block: Block) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(4.dp),
+        shape = RoundedCornerShape(8.dp),
+
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+        ) {
+            Text(
+                text = "Baker: ${block.baker?.alias}",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp
+            )
+            Text(
+                text = "Hash: ${block.hash}",
+                fontSize = 14.sp,
+                color = Color.Gray
+            )
+            Text(
+                text = "Timestamp: ${block.timestamp}",
+                fontSize = 14.sp,
+                color = Color.Gray
+            )
+            Text(
+                text = "Reward: ${block.reward} ꜩ",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                color = Color.DarkGray
+            )
+        }
     }
 }

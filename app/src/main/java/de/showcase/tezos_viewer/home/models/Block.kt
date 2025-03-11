@@ -1,7 +1,7 @@
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Blocks(
+data class Block(
     val cycle: Int?= null,
     val level: Int?= null,
     val hash: String?= null,

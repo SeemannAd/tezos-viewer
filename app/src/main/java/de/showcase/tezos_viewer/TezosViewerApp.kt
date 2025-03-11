@@ -23,12 +23,10 @@ import kotlinx.coroutines.delay
 fun TezosViewerApp(
     navController: NavHostController = rememberNavController(),
 ) {
-    // Retrieve application context
     val context = LocalContext.current
 
     val splashViewModel: SplashViewModel = viewModel()
 
-    // Create HomeViewModel with the application context
     val homeViewModel: HomeViewModel = remember {
         ViewModelProvider(
             context as ViewModelStoreOwner,
