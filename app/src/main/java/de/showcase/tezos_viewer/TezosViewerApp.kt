@@ -1,6 +1,7 @@
 package de.showcase.tezos_viewer
 
 import android.content.Context
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -35,16 +36,7 @@ fun TezosViewerApp(
         )[BlocksViewModel::class.java]
     }
 
-    LaunchedEffect(Unit) {
-        delay(200)
-        navController.navigate(blocksViewModel.route) {
-            popUpTo(splashViewModel.route) { inclusive = true }
-        }
-    }
-
-
-
-    NavHost(navController = navController, startDestination = splashViewModel.route) {
+    NavHost(navController = navController, startDestination = blocksViewModel.route) {
         composable(route = splashViewModel.route) { SplashScreen(viewModel = splashViewModel) }
         composable(route = blocksViewModel.route) { BlocksScreen(viewModel = blocksViewModel) }
     }

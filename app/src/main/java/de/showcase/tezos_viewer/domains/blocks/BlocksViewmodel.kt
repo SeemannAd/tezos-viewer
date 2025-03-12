@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -23,29 +24,27 @@ class BlocksViewModel(
 
     val blocks: MutableStateFlow<List<Block?>> = MutableStateFlow(emptyList())
 
-    fun fetchFromAssets() {
-        viewModelScope.launch {
-            try {
-                blocks.value = withContext(Dispatchers.IO) {
-                    val jsonString = context
-                        .assets
-                        .open("blocks.json")
-                        .bufferedReader()
-                        .use { it.readText() }
+    fun fetchFromAssets(): Job {
+        return viewModelScope.launch {
+            blocks.value = withContext(Dispatchers.IO) {
+                val jsonString = context
+                    .assets
+                    .open("blocks.json")
+                    .bufferedReader()
+                    .use { it.readText() }
 
-                    Json.decodeFromString<List<Block>>(jsonString)
-                }
-            } catch (e: Exception) {
-                //Todo @Dev add error handling
-                Timber.e("Could not fetch bakers! $e")
+                Json.decodeFromString<List<Block>>(jsonString)
             }
         }
     }
 
-    fun fetchBlocksFromRemote() : Job {
+    fun fetchBlocksFromRemote(): Job {
         return viewModelScope.launch {
             blocks.value = withContext(Dispatchers.IO) {
-                blocksService.getBlocks()
+                val blocks = blocksService.getBlocks()
+                blocks
+                    .filter { it.producer != null && it.proposer != null }
+                    .sortedByDescending { it.timestamp }
             }
         }
     }
