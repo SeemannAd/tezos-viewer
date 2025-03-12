@@ -1,5 +1,6 @@
 [versions]
 agp = "8.6.1"
+gradle = "8.6.0"
 kotlin = "2.0.0"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -8,7 +9,6 @@ espressoCore = "3.6.1"
 kotlinGradlePlugin = "2.1.10"
 kotlinStdlib = "2.1.0"
 kotlinxSerializationJson = "1.8.0"
-kotlinxJetBrainsSerializationJson = "2.1.0"
 ktorClientCio = "3.1.0"
 ktorClientContentNegotiation = "3.1.0"
 ktorClientCore = "3.1.0"
@@ -23,6 +23,7 @@ timber = "5.0.1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
