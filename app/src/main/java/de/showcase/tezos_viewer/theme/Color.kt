@@ -1,4 +1,4 @@
-package de.showcase.tezos_viewer.ui.theme
+package de.showcase.tezos_viewer.theme
 
 import androidx.compose.ui.graphics.Color
 

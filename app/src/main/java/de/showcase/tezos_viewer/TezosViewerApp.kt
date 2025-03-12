@@ -13,8 +13,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.showcase.tezos_viewer.home.HomeScreen
-import de.showcase.tezos_viewer.home.HomeViewModel
+import de.showcase.tezos_viewer.domains.blocks.BlocksService
+import de.showcase.tezos_viewer.domains.blocks.BlocksScreen
+import de.showcase.tezos_viewer.domains.blocks.BlocksViewModel
 import de.showcase.tezos_viewer.splash.SplashScreen
 import de.showcase.tezos_viewer.splash.SplashViewModel
 import kotlinx.coroutines.delay
@@ -27,16 +28,16 @@ fun TezosViewerApp(
 
     val splashViewModel: SplashViewModel = viewModel()
 
-    val homeViewModel: HomeViewModel = remember {
+    val blocksViewModel: BlocksViewModel = remember {
         ViewModelProvider(
             context as ViewModelStoreOwner,
-            HomeViewModelFactory(context.applicationContext)
-        )[HomeViewModel::class.java]
+            BlocksViewModelFactory(context.applicationContext)
+        )[BlocksViewModel::class.java]
     }
 
     LaunchedEffect(Unit) {
         delay(200)
-        navController.navigate(homeViewModel.route) {
+        navController.navigate(blocksViewModel.route) {
             popUpTo(splashViewModel.route) { inclusive = true }
         }
     }
@@ -45,15 +46,19 @@ fun TezosViewerApp(
 
     NavHost(navController = navController, startDestination = splashViewModel.route) {
         composable(route = splashViewModel.route) { SplashScreen(viewModel = splashViewModel) }
-        composable(route = homeViewModel.route) { HomeScreen(viewModel = homeViewModel) }
+        composable(route = blocksViewModel.route) { BlocksScreen(viewModel = blocksViewModel) }
     }
 }
 
 @Suppress("UNCHECKED_CAST")
-class HomeViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class BlocksViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
-            return HomeViewModel(context) as T
+        if (modelClass.isAssignableFrom(BlocksViewModel::class.java)) {
+            val blocksService = BlocksService()
+            return BlocksViewModel(
+                context = context,
+                blocksService = blocksService
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
