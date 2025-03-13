@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "de.showcase.tezos_viewer"
-        minSdk = 29
+        minSdk = 31
         //noinspection OldTargetApi
         targetSdk = 34
         versionCode = 1
@@ -76,6 +76,7 @@ dependencies {
     implementation (libs.kotlinx.serialization.json)
     implementation (libs.androidx.lifecycle.runtime.ktx)
     implementation (libs.timber)
+    implementation(libs.androidx.core.splashscreen)
 
     // test
     testImplementation(libs.junit)

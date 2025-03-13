@@ -195,7 +195,6 @@ fun BlocksHeader(data: BlocksHeaderData) {
             while (countdown > 0) {
                 delay(1000)
                 countdown--
-
             }
             countdown = 60
         }
