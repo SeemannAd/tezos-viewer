@@ -54,3 +54,20 @@ jobs:
 
       - name: Run tests
         run: ./gradlew test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ setup, test, build ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Apk
+        run: ./gradlew assembleDebug
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: apk-artifact
+          path: app/build/outputs/apk/debug/app-debug.apk
