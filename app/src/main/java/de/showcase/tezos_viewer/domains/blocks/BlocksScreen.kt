@@ -51,8 +51,8 @@ fun BlocksScreen(viewModel: BlocksViewModel) {
     val blocks by viewModel.blocks.collectAsState(emptyList())
 
     LaunchedEffect(Unit) {
-        // viewModel.fetchBlocksFromRemote()
-        viewModel.fetchFromAssets()
+        viewModel.fetchBlocksFromRemote()
+        // viewModel.fetchFromAssets()
     }
 
     Scaffold(
@@ -83,10 +83,8 @@ fun BlocksScreen(viewModel: BlocksViewModel) {
                             .fillMaxSize()
                             .padding(horizontal = 12.dp)
                     ) {
-                        if (blocks.isNotEmpty()) {
-                            items(blocks.size) { index ->
-                                BlockCard(block = blocks[index]!!)
-                            }
+                        items(blocks.size) { index ->
+                            BlockCard(block = blocks[index]!!)
                         }
                     }
                 }
@@ -232,7 +230,7 @@ fun BlocksHeader(data: BlocksHeaderData) {
                 modifier = Modifier
                     .weight(1f),
                 horizontalArrangement = Arrangement.End
-            ){
+            ) {
                 Chip(label = "next block in", value = "${countdown}sec")
                 Spacer(modifier = Modifier.size(4.dp, 4.dp))
                 Chip(label = "cycle", value = "${data.cycle}")
