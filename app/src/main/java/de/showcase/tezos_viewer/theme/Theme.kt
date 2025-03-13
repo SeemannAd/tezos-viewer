@@ -15,6 +15,7 @@ private val DarkColorScheme = darkColorScheme(
     inversePrimary = TezosWithe,
     secondary = TezosDarkBlue,
     tertiary = TezosLightGrey,
+    onTertiary = TezosPurpleGrey,
     background = TezosDarkGrey,
     onBackground = TezosDarkBlue,
     surface = TezosLightBlue,
@@ -43,5 +44,4 @@ fun TezosViewerTheme(
         shapes = shapes,
         content = content,
     )
-
 }

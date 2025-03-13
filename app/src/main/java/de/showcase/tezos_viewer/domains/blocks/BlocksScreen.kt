@@ -151,10 +151,10 @@ fun BlockCard(block: Block) {
             Text(
                 text = "[${block.priority}] ${block.timestamp}",
                 fontSize = 12.sp,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.onTertiary
             )
             Text(
-                text = "Proposer:${block.proposer?.address?.take(24)}...",
+                text = "Proposer: ${block.proposer?.address?.take(24)}...",
                 fontWeight = FontWeight.Normal,
                 fontSize = 14.sp,
                 color = MaterialTheme.colorScheme.tertiary
