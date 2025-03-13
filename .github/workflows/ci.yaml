@@ -33,9 +33,20 @@ jobs:
       - name: Run lint
         run: ./gradlew lint
 
+  build:
+    runs-on: ubuntu-latest
+    needs: [ setup, lint ]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run tests
+        run: ./gradlew assemble
+
   test:
     runs-on: ubuntu-latest
-    needs: setup
+    needs: [setup, lint]
 
     steps:
       - name: Checkout code
