@@ -9,6 +9,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,12 +50,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import de.showcase.tezos_viewer.R
+import de.showcase.tezos_viewer.domains.composables.Chip
 import kotlinx.coroutines.delay
 
 
 @Composable
-fun BlocksScreen(viewModel: BlocksViewModel) {
+fun BlocksScreen(viewModel: BlocksViewModel, onCardTap: (String) -> Unit) {
     val blocks by viewModel.blocks.collectAsState(emptyList())
 
     LaunchedEffect(Unit) {
@@ -91,7 +94,7 @@ fun BlocksScreen(viewModel: BlocksViewModel) {
                             .padding(horizontal = 12.dp)
                     ) {
                         items(blocks.size) { index ->
-                            BlockCard(block = blocks[index]!!)
+                            BlockCard(block = blocks[index]!!, onTap = onCardTap)
                         }
                     }
                 }
@@ -141,11 +144,16 @@ fun AnimatedBackground(
 }
 
 @Composable
-fun BlockCard(block: Block) {
+fun BlockCard(block: Block, onTap: (String) -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp),
+            .padding(4.dp)
+            .clickable {
+                if(block.hash == null) return@clickable
+                onTap(block.hash)
+            }
+        ,
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.surface),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground),
@@ -335,23 +343,6 @@ fun BlocksHeader(data: BlocksHeaderData) {
                 Chip(label = "cycle", value = "${data.cycle}")
             }
         }
-
-    }
-}
-
-@Composable
-fun Chip(label: String, value: String) {
-    Surface(
-        shape = MaterialTheme.shapes.large,
-        border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.outlineVariant),
-        color = MaterialTheme.colorScheme.onBackground,
-    ) {
-        Text(
-            text = "$label $value",
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
-            color = MaterialTheme.colorScheme.tertiary,
-            style = MaterialTheme.typography.labelSmall
-        )
     }
 }
 

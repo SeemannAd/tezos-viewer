@@ -1,5 +1,6 @@
 [
     {
+        "hash": "1000",
         "cycle": 1,
         "level": 0,
         "priority": "0",
@@ -21,6 +22,7 @@
         }
     },
     {
+        "hash": "1001",
         "cycle": 1,
         "level": 0,
         "priority": "1",
@@ -42,6 +44,7 @@
         }
     },
     {
+        "hash": "1002",
         "cycle": 1,
         "level": 0,
         "priority": "2",
@@ -63,6 +66,7 @@
         }
     },
     {
+        "hash": "1003",
         "cycle": 1,
         "level": 0,
         "priority": "3",
@@ -84,6 +88,7 @@
         }
     },
     {
+        "hash": "1004",
         "cycle": 1,
         "level": 0,
         "priority": "4",
@@ -105,6 +110,7 @@
         }
     },
     {
+        "hash": "1005",
         "cycle": 1,
         "level": 0,
         "priority": "5",
@@ -126,6 +132,7 @@
         }
     },
     {
+        "hash": "1006",
         "cycle": 1,
         "level": 0,
         "priority": "5",
