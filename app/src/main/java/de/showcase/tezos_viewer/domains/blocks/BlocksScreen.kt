@@ -14,16 +14,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -40,19 +44,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.showcase.tezos_viewer.R
 import kotlinx.coroutines.delay
+
 
 @Composable
 fun BlocksScreen(viewModel: BlocksViewModel) {
     val blocks by viewModel.blocks.collectAsState(emptyList())
 
     LaunchedEffect(Unit) {
-        viewModel.fetchBlocksFromRemote()
-        // viewModel.fetchFromAssets()
+        // viewModel.fetchBlocksFromRemote()
+        viewModel.fetchFromAssets()
     }
 
     Scaffold(
@@ -144,35 +151,127 @@ fun BlockCard(block: Block) {
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground),
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
     ) {
-        Column(
+        Row(
             modifier = Modifier
-                .padding(8.dp)
+                .height(100.dp)
+                .background(MaterialTheme.colorScheme.primary)
         ) {
-            Text(
-                text = "[${block.priority}] ${block.timestamp}",
-                fontSize = 12.sp,
-                color = MaterialTheme.colorScheme.onTertiary
-            )
-            Text(
-                text = "Proposer: ${block.proposer?.address?.take(24)}...",
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.tertiary
-            )
+            Box(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(horizontal = 6.dp, vertical = 4.dp)
+                    .weight(0.30f)
+            ) {
 
-            Text(
-                text = "Producer: ${block.producer?.address?.take(24)}...",
-                fontWeight = FontWeight.Normal,
-                fontSize = 14.sp,
-                color = MaterialTheme.colorScheme.tertiary
-            )
+                Column(
+                    verticalArrangement = Arrangement.SpaceAround,
+                    horizontalAlignment = Alignment.Start,
+                    modifier = Modifier.fillMaxSize(),
+                )
+                {
+                    Priority(priority = block.priority ?: 0)
 
-            Text(
-                text = "Reward: ${block.reward}ꜩ, Fee: ${block.fees}ꜩ, Bonus: ${block.bonus}ꜩ",
-                fontWeight = FontWeight.Bold,
-                fontSize = 16.sp,
-                color = MaterialTheme.colorScheme.tertiary
+                    Column {
+                        Text(
+                            text = block.date,
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.surfaceBright,
+                        )
+
+                        Text(
+                            text = block.time,
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.surfaceBright,
+                        )
+                    }
+                }
+            }
+
+
+            Column(
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .weight(0.70f)
+                    .fillMaxSize()
+                    .background(MaterialTheme.colorScheme.secondary)
+                    .padding(horizontal = 6.dp, vertical = 4.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                {
+                    Text(
+                        text = "Proposer:",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = "${block.proposer?.address?.take(24)}...",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                {
+                    Text(
+                        text = "Producer:",
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 14.sp,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Text(
+                        text = "${block.producer?.address?.take(36)}...",
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+
+
+                Text(
+                    text = "Reward: ${block.reward}ꜩ, Fee: ${block.fees}ꜩ, Bonus: ${block.bonus}ꜩ",
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.surfaceBright
+                )
+            }
+        }
+
+
+    }
+}
+
+@Composable
+fun Priority(priority: Int) {
+    Row {
+        if (priority == 0) {
+            Icon(
+                painter = painterResource(id = R.drawable.star),
+                contentDescription = "Zero Priority",
+                tint = MaterialTheme.colorScheme.tertiary,
+                modifier = Modifier.size(14.dp)
             )
+        }
+
+        val convertedPriority = if (priority > 5) 5 else priority
+        for (i in 1..(convertedPriority)) {
+            Icon(
+                painter = painterResource(id = R.drawable.star),
+                contentDescription = "[$priority] Priority",
+                tint = MaterialTheme.colorScheme.surfaceTint,
+                modifier = Modifier.size(14.dp)
+            )
+            Spacer(modifier = Modifier.width(2.dp))
         }
     }
 }

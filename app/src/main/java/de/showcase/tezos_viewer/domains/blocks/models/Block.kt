@@ -1,4 +1,9 @@
 import kotlinx.serialization.Serializable
+import java.time.DateTimeException
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 @Serializable
 data class Block(
@@ -79,7 +84,33 @@ data class Block(
     val baker: Baker? = null,
     val lbEscapeVote: Boolean?= null,
     val lbEscapeEma: Int?= null
-)
+){
+    val date: String
+        get() {
+            if(timestamp == null) return ""
+            return try {
+                val datePattern = DateTimeFormatter.ofPattern("dd.MM.yyyy")
+                LocalDateTime
+                    .ofInstant(Instant.parse(timestamp), ZoneId.systemDefault())
+                    .format(datePattern) ?: ""
+            } catch (e:Exception) {
+                ""
+            }
+        }
+
+    val time: String
+        get() {
+            if(timestamp == null) return ""
+            return try {
+                val datePattern = DateTimeFormatter.ofPattern("mm:hh a")
+                LocalDateTime
+                    .ofInstant(Instant.parse(timestamp), ZoneId.systemDefault())
+                    .format(datePattern) ?: ""
+            } catch (e:Exception) {
+                ""
+            }
+        }
+}
 
 @Serializable
 data class RegisterConstant(

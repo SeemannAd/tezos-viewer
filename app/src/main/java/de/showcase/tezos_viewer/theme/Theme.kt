@@ -23,6 +23,7 @@ private val DarkColorScheme = darkColorScheme(
     surfaceBright = TezosLightPurple,
     outline = TezosGreen,
     outlineVariant = TezosCyan,
+    surfaceTint = TezosYellow,
 )
 
 @Composable

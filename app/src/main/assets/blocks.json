@@ -5,8 +5,8 @@
         "priority": "0",
         "timestamp": "2023-01-01T00:00:00Z",
         "deposit": 0,
-        "reward": 0,
-        "fees": 0,
+        "reward": 10,
+        "fees": 2,
         "baker": {
             "alias": "Baker0",
             "address": "tz1BakerAddress0"
@@ -23,11 +23,11 @@
     {
         "cycle": 1,
         "level": 0,
-        "priority": "0",
+        "priority": "1",
         "timestamp": "2023-01-01T00:01:00Z",
         "deposit": 0,
-        "reward": 0,
-        "fees": 0,
+        "reward": 11,
+        "fees": 2,
         "baker": {
             "alias": "Baker1",
             "address": "tz1BakerAddress1"
@@ -44,11 +44,11 @@
     {
         "cycle": 1,
         "level": 0,
-        "priority": "0",
+        "priority": "2",
         "timestamp": "2023-01-01T00:02:00Z",
         "deposit": 0,
-        "reward": 0,
-        "fees": 0,
+        "reward": 12,
+        "fees": 2,
         "baker": {
             "alias": "Baker2",
             "address": "tz1BakerAddress2"
@@ -65,11 +65,11 @@
     {
         "cycle": 1,
         "level": 0,
-        "priority": "0",
+        "priority": "3",
         "timestamp": "2023-01-01T00:03:00Z",
         "deposit": 0,
-        "reward": 0,
-        "fees": 0,
+        "reward": 13,
+        "fees": 2,
         "baker": {
             "alias": "Baker3",
             "address": "tz1BakerAddress3"
@@ -86,11 +86,11 @@
     {
         "cycle": 1,
         "level": 0,
-        "priority": "0",
+        "priority": "4",
         "timestamp": "2023-01-01T00:04:00Z",
         "deposit": 0,
-        "reward": 0,
-        "fees": 0,
+        "reward": 14,
+        "fees": 2,
         "baker": {
             "alias": "Baker4",
             "address": "tz1BakerAddress4"
@@ -107,11 +107,11 @@
     {
         "cycle": 1,
         "level": 0,
-        "priority": "0",
+        "priority": "5",
         "timestamp": "2023-01-01T00:05:00Z",
         "deposit": 0,
-        "reward": 0,
-        "fees": 0,
+        "reward": 15,
+        "fees": 2,
         "baker": {
             "alias": "Baker5",
             "address": "tz1BakerAddress5"
@@ -128,11 +128,11 @@
     {
         "cycle": 1,
         "level": 0,
-        "priority": "0",
+        "priority": "5",
         "timestamp": "2023-01-01T00:06:00Z",
         "deposit": 0,
-        "reward": 0,
-        "fees": 0,
+        "reward": 16,
+        "fees": 2,
         "baker": {
             "alias": "Baker6",
             "address": "tz1BakerAddress6"
