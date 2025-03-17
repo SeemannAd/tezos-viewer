@@ -73,7 +73,7 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
                             tint = Color.White
                         )
                     }
-                    Chip(label = "Hash", value = "${block.hash}")
+                    Chip(label = "Hash", value = "${block.hash}".take(12) + "...")
                     Spacer(modifier = Modifier.size(12.dp, 12.dp))
                     Chip(label = "Cycle", value = "${block.cycle}")
                 }
@@ -97,7 +97,7 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "${block.proposer?.address?.take(24)}...",
+                            text = "${block.proposer?.address}",
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
                             color = MaterialTheme.colorScheme.tertiary
@@ -117,7 +117,7 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            text = "${block.producer?.address?.take(36)}...",
+                            text = "${block.producer?.address}",
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
                             color = MaterialTheme.colorScheme.tertiary
@@ -126,20 +126,5 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
                 }
             }
         }
-    }
-}
-
-class BlockViewModel : ViewModel() {
-    private var _route = "/block/"
-    val route = _route
-
-    val block: MutableStateFlow<Block> = MutableStateFlow(Block())
-
-    fun setBlockIdHashId(hashId: String) {
-        _route += hashId
-    }
-
-    fun setBlock(block: Block) {
-        this.block.value = block
     }
 }
