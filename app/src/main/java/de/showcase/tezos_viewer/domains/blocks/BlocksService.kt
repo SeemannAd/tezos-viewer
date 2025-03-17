@@ -23,41 +23,19 @@ class Api(
             })
         }
     }
-
-    /*
-    val ktorClient = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-            })
-        }
-    }
-     */
 }
 
 class BlocksService(private val api: Api = Api()) {
-
-    /*
-    private val ktorClient = HttpClient(CIO) {
-        install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-            })
-        }
-    }
-     */
-
     suspend fun getBlocks(): List<Block> {
         val url = Url(api.environment.endPointBlocks)
         return try {
-            // val response = ktorClient.get(url)
             val response = api.ktorClient.get(url)
             val body = response.body<List<Block>>()
 
             body
         } catch (e: Exception) {
+            // https://api.tzkt.io/#section/Get-Started/Free-TzKT-API
+            // if status code is 429 than rate limit has been exceeded
             emptyList()
         }
     }
