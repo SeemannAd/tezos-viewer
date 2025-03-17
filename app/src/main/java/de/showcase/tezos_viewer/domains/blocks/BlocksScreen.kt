@@ -1,6 +1,7 @@
 package de.showcase.tezos_viewer.domains.blocks
 
 import Block
+import android.health.connect.datatypes.PlannedExerciseBlock
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -79,8 +80,11 @@ fun BlocksScreen(viewModel: BlocksViewModel, onCardTap: (String) -> Unit) {
                     modifier = Modifier.align(Alignment.Center)
                 )
             } else {
-                AnimatedBackground {
+                AnimatedBackground(
+                    enabled = false
+                ) {
                     BlocksHeader(
+                        enabled = false,
                         data = BlocksHeaderData(
                             netName = "Mainnet",
                             blocksCount = blocks.size,
@@ -106,6 +110,7 @@ fun BlocksScreen(viewModel: BlocksViewModel, onCardTap: (String) -> Unit) {
 @Composable
 fun AnimatedBackground(
     label: String = "Background Animation [Gradient]",
+    enabled: Boolean = true,
     duration: Int = 5000,
     colors: List<Color> = listOf(
         MaterialTheme.colorScheme.primary,
@@ -114,6 +119,8 @@ fun AnimatedBackground(
     ),
     content: @Composable () -> Unit,
 ) {
+    if(!enabled) return Column{ content() }
+
     val transition = rememberInfiniteTransition(label)
 
     val animatedValue by transition.animateFloat(
@@ -291,17 +298,22 @@ data class BlocksHeaderData(
 )
 
 @Composable
-fun BlocksHeader(data: BlocksHeaderData) {
+fun BlocksHeader(
+    enabled: Boolean = true,
+    data: BlocksHeaderData
+) {
 
     var countdown by remember { mutableIntStateOf(60) }
 
-    LaunchedEffect(Unit) {
-        while (true) {
-            while (countdown > 0) {
-                delay(1000)
-                countdown--
+    if(enabled) {
+        LaunchedEffect(Unit) {
+            while (true) {
+                while (countdown > 0) {
+                    delay(1000)
+                    countdown--
+                }
+                countdown = 60
             }
-            countdown = 60
         }
     }
 
