@@ -37,7 +37,9 @@ fun TezosViewerApp(
         )[BlockViewModel::class.java]
     }
 
-
+    // adding the api key for pro version via a settings or more screen would be sufficient
+    // see api documentation for handling bearer token authentication for a TzKT Pro access.
+    // link: https://api.tzkt.io/#section/Get-Started/TzKT-Pro
 
     NavHost(navController = navController, startDestination = blocksViewModel.route) {
         composable(route = blocksViewModel.route) {
