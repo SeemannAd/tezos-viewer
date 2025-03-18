@@ -27,7 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.showcase.tezos_viewer.domains.composables.Chip
+import de.showcase.tezos_viewer.domains.shared.composables.Chip
 
 @Composable
 fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){

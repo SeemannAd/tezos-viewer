@@ -1,4 +1,4 @@
-package de.showcase.tezos_viewer.domains.composables
+package de.showcase.tezos_viewer.domains.shared.composables
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding

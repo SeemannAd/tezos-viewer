@@ -50,7 +50,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.showcase.tezos_viewer.R
-import de.showcase.tezos_viewer.domains.composables.Chip
+import de.showcase.tezos_viewer.domains.shared.composables.Chip
 import kotlinx.coroutines.delay
 
 
