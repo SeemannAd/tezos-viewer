@@ -54,7 +54,6 @@ android {
 
 composeCompiler {
     reportsDestination = layout.buildDirectory.dir("compose_compiler")
-    stabilityConfigurationFile = rootProject.layout.projectDirectory.file("stability_config.conf")
 }
 
 dependencies {
@@ -77,6 +76,12 @@ dependencies {
     implementation (libs.androidx.lifecycle.runtime.ktx)
     implementation (libs.timber)
     implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.modernstorage.permissions)
+    implementation(libs.modernstorage.storage)
+    implementation(libs.okio)
+    implementation(libs.core.ktx)
+
 
     // test
     testImplementation(libs.junit)

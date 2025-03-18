@@ -21,8 +21,11 @@ lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
 composeBom = "2025.02.00"
 mockk = "1.13.17"
+modernstorage = "1.0.0-alpha06"
 navigationCompose = "2.8.8"
 timber = "5.0.1"
+coreKtxVersion = "1.6.1"
+okio = "3.10.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,7 +56,11 @@ ktor-client-mock = { module = "io.ktor:ktor-client-mock", version.ref = "ktorCli
 ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorClientSerialization" }
 ktor-serialization-kotlinx-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorSerializationKotlinxJson" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+modernstorage-storage = { module = "com.google.modernstorage:modernstorage-storage", version.ref = "modernstorage" }
+modernstorage-permissions = { module = "com.google.modernstorage:modernstorage-permissions", version.ref = "modernstorage" }
+okio = { module = "com.squareup.okio:okio" , version.ref = "okio"}
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
+core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "coreKtxVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
