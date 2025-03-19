@@ -14,15 +14,15 @@ import org.junit.runner.RunWith
  * This test must run on real device, since the path to the storage is not accessible
  */
 @RunWith(AndroidJUnit4::class)
-class StoreServiceTest {
+class StoreFileServiceTest {
     private val context = InstrumentationRegistry.getInstrumentation().targetContext
 
-    private val storeService = StoreService(
+    private val storeFileService = StoreFileService(
         context = context
     )
 
     @Test
-    fun `GIVEN the StoreService WHEN something is stored THEN return a successfully StoreResult must be returned`() =
+    fun `GIVEN the StoreFileService WHEN something is stored THEN return a successfully StoreResult must be returned`() =
         runTest {
             if (isRunningOnEmulator()) return@runTest
 
@@ -35,11 +35,11 @@ class StoreServiceTest {
                 data = "some test data"
             )
 
-            val actual = storeService.write(storeData)
+            val actual = storeFileService.write(storeData)
 
             assertEquals("Message: ${actual.message}", expected.success, actual.success)
 
-            storeService.clear()
+            storeFileService.clear()
         }
 
     @Test
@@ -49,7 +49,7 @@ class StoreServiceTest {
 
             val fileName = "test_file.txt"
 
-            val actual = storeService.read(fileName)
+            val actual = storeFileService.read(fileName)
 
             assertEquals("Message: ${actual.message}", false, actual.success)
         }

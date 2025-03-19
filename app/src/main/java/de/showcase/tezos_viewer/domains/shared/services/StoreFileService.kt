@@ -21,7 +21,7 @@ data class StoreResult(
     val data: String? = null
 )
 
-class StoreService(val context: Context) {
+class StoreFileService(val context: Context) {
     private val fileSystem = AndroidFileSystem(context)
 
     private val collection = MediaStore

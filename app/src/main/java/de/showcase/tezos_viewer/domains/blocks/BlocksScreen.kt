@@ -46,16 +46,19 @@ import de.showcase.tezos_viewer.domains.shared.composables.AnimatedBackground
 import de.showcase.tezos_viewer.domains.shared.composables.Chip
 import kotlinx.coroutines.delay
 
-
 @Composable
-fun BlocksScreen(viewModel: BlocksViewModel, onCardTap: (String) -> Unit) {
-    val blocks by viewModel.blocks.collectAsState(emptyList())
+fun BlocksScreen(
+    blocksViewModel: BlocksViewModel,
+    onCardTap: (String) -> Unit
+) {
+    val blocks by blocksViewModel.blocks.collectAsState(emptyList())
+    val isPro by blocksViewModel.isPro.collectAsState(false)
 
     LaunchedEffect(Unit) {
-        // viewModel.fetchBlocksFromRemote()
-        viewModel.fetchFromAssets()
+        // blocksViewModel.fetchBlocksFromRemote()
+        blocksViewModel.fetchFromAssets()
+        blocksViewModel.checkForProAccess()
     }
-
     Scaffold(
         modifier = Modifier
             .fillMaxSize()
@@ -78,7 +81,8 @@ fun BlocksScreen(viewModel: BlocksViewModel, onCardTap: (String) -> Unit) {
                         data = BlocksHeaderData(
                             netName = "Mainnet",
                             blocksCount = blocks.size,
-                            cycle = blocks.first()?.cycle!!
+                            cycle = blocks.first()?.cycle!!,
+                            isPro = isPro
                         )
                     )
 
@@ -104,10 +108,9 @@ fun BlockCard(block: Block, onTap: (String) -> Unit) {
             .fillMaxWidth()
             .padding(4.dp)
             .clickable {
-                if(block.hash == null) return@clickable
+                if (block.hash == null) return@clickable
                 onTap(block.hash)
-            }
-        ,
+            },
         shape = RoundedCornerShape(8.dp),
         border = BorderStroke(width = 1.dp, color = MaterialTheme.colorScheme.surface),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.onBackground),
@@ -148,7 +151,6 @@ fun BlockCard(block: Block, onTap: (String) -> Unit) {
                     }
                 }
             }
-
 
             Column(
                 verticalArrangement = Arrangement.SpaceBetween,
@@ -239,7 +241,8 @@ fun Priority(priority: Int) {
 data class BlocksHeaderData(
     val netName: String,
     val blocksCount: Int,
-    val cycle: Int
+    val cycle: Int,
+    val isPro: Boolean
 )
 
 @Composable
@@ -250,7 +253,7 @@ fun BlocksHeader(
 
     var countdown by remember { mutableIntStateOf(60) }
 
-    if(enabled) {
+    if (enabled) {
         LaunchedEffect(Unit) {
             while (true) {
                 while (countdown > 0) {
@@ -271,9 +274,7 @@ fun BlocksHeader(
             .padding(horizontal = 18.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-
         BlocksCycle(label = "ꜩ", progress = progress)
-
         Row(
             modifier = Modifier
                 .weight(1f),
@@ -284,7 +285,7 @@ fun BlocksHeader(
                     .padding(horizontal = 12.dp)
             ) {
                 Text(
-                    text = "Tezos ${data.netName}",
+                    text = data.netName,
                     color = MaterialTheme.colorScheme.inversePrimary,
                     textAlign = TextAlign.Center
                 )
@@ -296,8 +297,13 @@ fun BlocksHeader(
                 horizontalArrangement = Arrangement.End
             ) {
                 Chip(label = "next block in", value = "${countdown}sec")
-                Spacer(modifier = Modifier.size(4.dp, 4.dp))
+                Spacer(modifier = Modifier.size(6.dp, 6.dp))
                 Chip(label = "cycle", value = "${data.cycle}")
+
+                if (data.isPro) {
+                    Spacer(modifier = Modifier.size(6.dp, 6.dp))
+                    Chip(label = "Pro", borderColor = MaterialTheme.colorScheme.surfaceTint)
+                }
             }
         }
     }

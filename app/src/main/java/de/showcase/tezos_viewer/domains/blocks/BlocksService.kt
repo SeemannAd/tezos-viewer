@@ -13,8 +13,9 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 class Api(
-    val environment: Environment = Environment(),
-    private val engine: HttpClientEngine = CIO.create()) {
+    val environment: Environment,
+    private val engine: HttpClientEngine = CIO.create(),
+) {
     val ktorClient = HttpClient(engine) {
         install(ContentNegotiation) {
             json(Json {
@@ -25,7 +26,12 @@ class Api(
     }
 }
 
-class BlocksService(private val api: Api = Api()) {
+class BlocksService(private val api: Api) {
+
+    fun checkForProAccess() : Boolean {
+        return api.environment.apiKey.isNotEmpty()
+    }
+
     suspend fun getBlocks(): List<Block> {
         val url = Url(api.environment.endPointBlocks)
         return try {

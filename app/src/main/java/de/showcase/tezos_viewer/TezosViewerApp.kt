@@ -1,7 +1,6 @@
 package de.showcase.tezos_viewer
 
 import android.content.Context
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,13 +20,15 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.showcase.tezos_viewer.domains.block.BlockScreen
 import de.showcase.tezos_viewer.domains.block.BlockViewModel
+import de.showcase.tezos_viewer.domains.blocks.Api
 import de.showcase.tezos_viewer.domains.blocks.BlocksService
 import de.showcase.tezos_viewer.domains.blocks.BlocksScreen
 import de.showcase.tezos_viewer.domains.blocks.BlocksViewModel
 import de.showcase.tezos_viewer.domains.settings.SettingsScreen
 import de.showcase.tezos_viewer.domains.settings.SettingsViewModel
 import de.showcase.tezos_viewer.domains.shared.composables.BottomNavigationBar
-import de.showcase.tezos_viewer.domains.shared.services.StoreService
+import de.showcase.tezos_viewer.domains.shared.services.StoreDataService
+import de.showcase.tezos_viewer.environment.Environment
 import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
@@ -38,10 +39,16 @@ fun TezosViewerApp(
 
     val context = LocalContext.current
 
+    val environment = Environment()
+    val api = Api(environment = environment)
+
     val blocksViewModel: BlocksViewModel = remember {
         ViewModelProvider(
             context as ViewModelStoreOwner,
-            BlocksViewModelFactory(context.applicationContext)
+            BlocksViewModelFactory(
+                context = context.applicationContext,
+                dependencies = BlocksDependencies(api = api),
+            )
         )[BlocksViewModel::class.java]
     }
 
@@ -55,13 +62,12 @@ fun TezosViewerApp(
     val settingsViewModel: SettingsViewModel = remember {
         ViewModelProvider(
             context as ViewModelStoreOwner,
-            SettingsViewModelFactory(context.applicationContext)
+            SettingsViewModelFactory(
+                context = context.applicationContext,
+                dependencies = SettingsDependencies(api = api)
+            )
         )[SettingsViewModel::class.java]
     }
-
-    // adding the api key for pro version via a settings or more screen would be sufficient
-    // see api documentation for handling bearer token authentication for a TzKT Pro access.
-    // link: https://api.tzkt.io/#section/Get-Started/TzKT-Pro
 
     Scaffold(
         bottomBar = {
@@ -92,7 +98,7 @@ fun TezosViewerApp(
             composable(route = blocksViewModel.route) {
                 // build blocks screen
                 BlocksScreen(
-                    viewModel = blocksViewModel,
+                    blocksViewModel = blocksViewModel,
                     onCardTap = { hashId ->
                         val block = blocksViewModel.blocks.value.find { it?.hash == hashId }
                         if (block == null) return@BlocksScreen
@@ -124,14 +130,26 @@ fun TezosViewerApp(
     }
 }
 
+data class BlocksDependencies(
+    val api: Api
+)
+
+data class SettingsDependencies(
+    val api: Api
+)
+
 @Suppress("UNCHECKED_CAST")
-class BlocksViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class BlocksViewModelFactory(
+    private val context: Context,
+    private val dependencies: BlocksDependencies
+) :
+    ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BlocksViewModel::class.java)) {
-            val blocksService = BlocksService()
             return BlocksViewModel(
                 context = context,
-                blocksService = blocksService
+                blocksService = BlocksService(api = dependencies.api),
             ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
@@ -150,11 +168,17 @@ class BlockViewModelFactory(private val context: Context) : ViewModelProvider.Fa
 }
 
 @Suppress("UNCHECKED_CAST")
-class SettingsViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+class SettingsViewModelFactory(
+    private val context: Context,
+    private val dependencies: SettingsDependencies
+) : ViewModelProvider.Factory {
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SettingsViewModel::class.java)) {
-            val storeService = StoreService(context = context)
-            return SettingsViewModel(storeService = storeService) as T
+            return SettingsViewModel(
+                storeDataService = StoreDataService(context),
+                api = dependencies.api
+            ) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

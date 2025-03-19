@@ -22,6 +22,12 @@ class BlocksViewModel(
 
     val blocks: MutableStateFlow<List<Block?>> = MutableStateFlow(emptyList())
 
+    val isPro: MutableStateFlow<Boolean> = MutableStateFlow(blocksService.checkForProAccess())
+
+    fun checkForProAccess() {
+        isPro.value = blocksService.checkForProAccess()
+    }
+
     fun fetchFromAssets(): Job {
         return viewModelScope.launch {
             blocks.value = withContext(Dispatchers.IO) {
