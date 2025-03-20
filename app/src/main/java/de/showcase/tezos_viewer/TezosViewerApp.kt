@@ -138,9 +138,7 @@ fun TezosViewerApp(
 class BlocksViewModelFactory(
     private val context: Context,
     private val dependencies: BlocksDependencies
-) :
-    ViewModelProvider.Factory {
-
+) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BlocksViewModel::class.java)) {
             return BlocksViewModel(
