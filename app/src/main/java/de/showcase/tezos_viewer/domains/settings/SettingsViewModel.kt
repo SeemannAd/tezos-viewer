@@ -2,13 +2,12 @@ package de.showcase.tezos_viewer.domains.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import de.showcase.tezos_viewer.domains.blocks.Api
+import de.showcase.tezos_viewer.domains.shared.Api
 import de.showcase.tezos_viewer.domains.shared.services.StoreDataService
 import de.showcase.tezos_viewer.environment.Key
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 
 class SettingsViewModel(
     val storeDataService: StoreDataService,

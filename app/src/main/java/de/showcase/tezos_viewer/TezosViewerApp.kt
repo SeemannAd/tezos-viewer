@@ -107,7 +107,7 @@ fun TezosViewerApp(
                 BlocksScreen(
                     blocksViewModel = blocksViewModel,
                     onCardTap = { hashId ->
-                        val block = blocksViewModel.blocks.value.find { it?.hash == hashId }
+                        val block = blocksViewModel.blocks.value!!.find { it?.hash == hashId }
                         if (block == null) return@BlocksScreen
                         blockViewModel.setBlock(block)
 

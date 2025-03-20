@@ -28,6 +28,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -53,8 +54,8 @@ fun BlocksScreen(
 
     LaunchedEffect(Unit) {
         blocksViewModel.checkForProAccess()
-        blocksViewModel.fetchFromAssets()
-        // blocksViewModel.fetchBlocksFromRemote()
+        // blocksViewModel.fetchFromAssets()
+        blocksViewModel.fetchBlocksFromRemote()
     }
     Scaffold(
         modifier = Modifier
@@ -65,7 +66,9 @@ fun BlocksScreen(
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            if (blocks.isEmpty()) {
+            if(blocks == null) return@Box
+
+            if (blocks!!.isEmpty()) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center)
                 )
@@ -77,8 +80,8 @@ fun BlocksScreen(
                         enabled = false,
                         data = BlocksHeaderData(
                             netName = "Mainnet",
-                            blocksCount = blocks.size,
-                            cycle = blocks.first()?.cycle!!,
+                            blocksCount = blocks!!.size,
+                            cycle = blocks!!.first()?.cycle!!,
                             isPro = isPro
                         )
                     )
@@ -87,8 +90,8 @@ fun BlocksScreen(
                         modifier = Modifier
                             .fillMaxSize()
                     ) {
-                        items(blocks.size) { index ->
-                            BlockCard(block = blocks[index]!!, onTap = onCardTap)
+                        items(blocks!!.size) { index ->
+                            BlockCard(block = blocks!![index]!!, onTap = onCardTap)
                             HorizontalDivider(
                                 color = MaterialTheme.colorScheme.inversePrimary,
                                 thickness = 1.dp
@@ -131,7 +134,7 @@ fun BlockCard(block: Block, onTap: (String) -> Unit) {
                 )
                 {
                     Priority(priority = block.priority ?: 0)
-                    Column{
+                    Column {
                         Text(
                             text = block.date,
                             fontSize = 12.sp,
