@@ -22,11 +22,10 @@ import org.junit.Before
 import org.junit.Test
 
 class BlocksServiceTest {
-    lateinit var testEnvironment : Environment
-    lateinit var  engine:MockEngine
-    lateinit var  api: Api
-    lateinit var blocksService: BlocksService
-
+    private lateinit var testEnvironment : Environment
+    private lateinit var  engine:MockEngine
+    private lateinit var  api: Api
+    private lateinit var blocksService: BlocksService
     private val expectedBlocks: List<Block> = listOf(
         Block(
             cycle = 1,
@@ -39,7 +38,7 @@ class BlocksServiceTest {
         val storeDataService = mockk<StoreDataService>()
         every { storeDataService.read(any()) } returns ""
 
-        testEnvironment = Environment(storeDataService = storeDataService)
+        testEnvironment = Environment()
 
         engine = MockEngine { request ->
             val responseBody = Json.encodeToString<List<Block>>(expectedBlocks)
