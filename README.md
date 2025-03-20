@@ -29,10 +29,11 @@ Current Tech-Stack:
 The is divided into different domains. Each domain represents a stakeholder epic.  
 
 #### Blocks
-Overview of the current state of the Tezos Blockchain.
+Overview of the current state of the Tezos Blockchain. The latest blocks for the current cycle 
+are displayed. 
 
 #### Block
-Details of a selected Block within the Blockchain.
+Details of a selected Block within the Blockchain. 
 
 #### Settings
-Access user settings like adding api key for PRO access to the Tezos blockchain.
+Access user settings like adding Api-Key for PRO access to the Tezos blockchain.
