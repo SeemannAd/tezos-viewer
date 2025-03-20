@@ -15,6 +15,8 @@ Data provided by [TzKT API](https://api.tzkt.io).
 The architecture is build by a agile domain driven approach. The project follows the SOLID developer patter and tries to reduce 
 dependencies to third party libraries and focus in core functionality. 
 
+Please see [Architecture Vision](documention/202503_Tezos_Viewer_Architecture_Vision.pdf)
+
 Current Tech-Stack:
 1. Jetpack Compose
 2. NavHost 
