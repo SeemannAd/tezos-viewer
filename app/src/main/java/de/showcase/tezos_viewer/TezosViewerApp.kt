@@ -20,16 +20,24 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.showcase.tezos_viewer.domains.block.BlockScreen
 import de.showcase.tezos_viewer.domains.block.BlockViewModel
-import de.showcase.tezos_viewer.domains.blocks.Api
 import de.showcase.tezos_viewer.domains.blocks.BlocksService
 import de.showcase.tezos_viewer.domains.blocks.BlocksScreen
 import de.showcase.tezos_viewer.domains.blocks.BlocksViewModel
 import de.showcase.tezos_viewer.domains.settings.SettingsScreen
 import de.showcase.tezos_viewer.domains.settings.SettingsViewModel
+import de.showcase.tezos_viewer.domains.shared.Api
 import de.showcase.tezos_viewer.domains.shared.composables.BottomNavigationBar
 import de.showcase.tezos_viewer.domains.shared.services.StoreDataService
 import de.showcase.tezos_viewer.environment.Environment
 import kotlinx.coroutines.flow.MutableStateFlow
+
+data class BlocksDependencies(
+    val api: Api
+)
+
+data class SettingsDependencies(
+    val api: Api
+)
 
 @Composable
 fun TezosViewerApp(
@@ -74,11 +82,11 @@ fun TezosViewerApp(
             BottomNavigationBar(
                 onNavigateToBlocks = {
                     activeScreen.value = blocksViewModel.route
-                    navController.navigate(blocksViewModel.route)
+                    navController.navigate(activeScreen.value)
                 },
                 onNavigateToSettings = {
                     activeScreen.value = settingsViewModel.route
-                    navController.navigate(settingsViewModel.route)
+                    navController.navigate(activeScreen.value)
                 }
             )
         },
@@ -96,7 +104,6 @@ fun TezosViewerApp(
             )
         ) {
             composable(route = blocksViewModel.route) {
-                // build blocks screen
                 BlocksScreen(
                     blocksViewModel = blocksViewModel,
                     onCardTap = { hashId ->
@@ -104,23 +111,20 @@ fun TezosViewerApp(
                         if (block == null) return@BlocksScreen
                         blockViewModel.setBlock(block)
 
-                        navController.navigate(activeScreen.value)
+                        navController.navigate("${blockViewModel.route}/${block.hash}")
                     })
             }
             composable("${blockViewModel.route}/{hashId}") { backStackEntry ->
                 val hashId = backStackEntry.arguments?.getString("hashId").orEmpty()
                 blockViewModel.setBlockIdHashId(hashId = hashId)
 
-                // build block screen
                 BlockScreen(
                     viewModel = blockViewModel,
                     onBackTap = {
-                        activeScreen.value = blocksViewModel.route
                         navController.popBackStack()
                     },
                 )
             }
-
             composable(settingsViewModel.route) { backStackEntry ->
                 SettingsScreen(
                     viewModel = settingsViewModel,
@@ -129,14 +133,6 @@ fun TezosViewerApp(
         }
     }
 }
-
-data class BlocksDependencies(
-    val api: Api
-)
-
-data class SettingsDependencies(
-    val api: Api
-)
 
 @Suppress("UNCHECKED_CAST")
 class BlocksViewModelFactory(

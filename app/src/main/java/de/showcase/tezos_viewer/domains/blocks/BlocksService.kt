@@ -1,30 +1,10 @@
 package de.showcase.tezos_viewer.domains.blocks
 
 import Block
-import de.showcase.tezos_viewer.environment.Environment
-import io.ktor.client.HttpClient
+import de.showcase.tezos_viewer.domains.shared.Api
 import io.ktor.client.call.body
-import io.ktor.client.engine.HttpClientEngine
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.request.get
 import io.ktor.http.Url
-import io.ktor.serialization.kotlinx.json.json
-import kotlinx.serialization.json.Json
-
-class Api(
-    val environment: Environment,
-    private val engine: HttpClientEngine = CIO.create(),
-) {
-    val ktorClient = HttpClient(engine) {
-        install(ContentNegotiation) {
-            json(Json {
-                prettyPrint = true
-                isLenient = true
-            })
-        }
-    }
-}
 
 class BlocksService(private val api: Api) {
 
