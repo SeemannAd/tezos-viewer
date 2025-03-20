@@ -6,18 +6,22 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import de.showcase.tezos_viewer.domains.shared.composables.Chip
 
 @Composable
-fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
+fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
 
     val block by viewModel.block.collectAsState(Block())
 
@@ -57,7 +61,8 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
                 ) {
                     IconButton(
                         modifier = Modifier.padding(0.dp),
-                        onClick =  onBackTap) {
+                        onClick = onBackTap
+                    ) {
                         Icon(
                             Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back",
@@ -75,6 +80,7 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
                     modifier = Modifier
                         .padding(horizontal = 12.dp)
                 ) {
+
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier.fillMaxWidth()
@@ -114,7 +120,64 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit){
                             color = MaterialTheme.colorScheme.tertiary
                         )
                     }
+
+                    LazyColumn {
+                        return@LazyColumn
+
+                        // @dev ignore null objects for data binding
+                        items(block.transactions!!.size) { index ->
+                            val transaction = block.transactions!![index]
+                            val transactionData = TransactionData(
+                                id = transaction.id,
+                                block = transaction.block,
+                                level = transaction.level,
+                                status = transaction.status,
+                                amount = transaction.amount
+                            )
+                            TransactionEntry(data = transactionData)
+                            HorizontalDivider(
+                                color = MaterialTheme.colorScheme.inversePrimary,
+                                thickness = 1.dp,
+                            )
+                        }
+                    }
                 }
+            }
+        }
+    }
+}
+
+data class TransactionData(
+    val id: Int? = null,
+    val block: String? = null,
+    val level: Int? = null,
+    val amount: Int? = null,
+    val status: String? = null
+)
+
+@Composable
+fun TransactionEntry(
+    data: TransactionData,
+) {
+    Row {
+        Box(
+            modifier = Modifier
+                .weight(0.3f)
+        ) {
+            Text(text = "${data.id}")
+        }
+        VerticalDivider(
+            color = MaterialTheme.colorScheme.inversePrimary,
+            thickness = 1.dp
+        )
+        Box(
+            modifier = Modifier.weight(0.7f)
+        ) {
+            Column {
+                Text(data.block.toString())
+                Text(data.status.toString())
+                Text(data.level.toString())
+                Text(data.amount.toString())
             }
         }
     }

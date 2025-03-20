@@ -1,11 +1,8 @@
 package de.showcase.tezos_viewer.domains
 
 import Block
-import android.content.Context
-import android.content.SharedPreferences
-import de.showcase.tezos_viewer.domains.blocks.Api
 import de.showcase.tezos_viewer.domains.blocks.BlocksService
-import de.showcase.tezos_viewer.domains.shared.extensions.read
+import de.showcase.tezos_viewer.domains.shared.Api
 import de.showcase.tezos_viewer.domains.shared.services.StoreDataService
 import de.showcase.tezos_viewer.environment.Environment
 import io.ktor.client.engine.mock.MockEngine

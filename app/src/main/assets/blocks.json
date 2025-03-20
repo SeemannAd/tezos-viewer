@@ -1,156 +1,317 @@
 [
-    {
-        "hash": "1000",
-        "cycle": 1,
-        "level": 0,
-        "priority": "0",
-        "timestamp": "2023-01-01T00:00:00Z",
-        "deposit": 0,
-        "reward": 10,
-        "fees": 2,
-        "baker": {
-            "alias": "Baker0",
-            "address": "tz1BakerAddress0"
-        },
-        "producer": {
-            "alias": "Producer0",
-            "address": "tz1ProducerAddress0"
-        },
-        "proposer": {
-            "alias": "Proposer0",
-            "address": "tz1ProposerAddress0"
-        }
+  {
+    "hash": "1000",
+    "cycle": 1,
+    "level": 0,
+    "priority": "0",
+    "timestamp": "2023-01-01T00:00:00Z",
+    "deposit": 0,
+    "reward": 10,
+    "fees": 2,
+    "baker": {
+      "alias": "Baker0",
+      "address": "tz1BakerAddress0"
     },
-    {
-        "hash": "1001",
-        "cycle": 1,
-        "level": 0,
-        "priority": "1",
-        "timestamp": "2023-01-01T00:01:00Z",
-        "deposit": 0,
-        "reward": 11,
-        "fees": 2,
-        "baker": {
-            "alias": "Baker1",
-            "address": "tz1BakerAddress1"
-        },
-        "producer": {
-            "alias": "Producer1",
-            "address": "tz1ProducerAddress1"
-        },
-        "proposer": {
-            "alias": "Proposer1",
-            "address": "tz1ProposerAddress1"
-        }
+    "producer": {
+      "alias": "Producer0",
+      "address": "tz1ProducerAddress0"
     },
-    {
-        "hash": "1002",
-        "cycle": 1,
-        "level": 0,
-        "priority": "2",
-        "timestamp": "2023-01-01T00:02:00Z",
-        "deposit": 0,
-        "reward": 12,
-        "fees": 2,
-        "baker": {
-            "alias": "Baker2",
-            "address": "tz1BakerAddress2"
-        },
-        "producer": {
-            "alias": "Producer2",
-            "address": "tz1ProducerAddress2"
-        },
-        "proposer": {
-            "alias": "Proposer2",
-            "address": "tz1ProposerAddress2"
-        }
+    "proposer": {
+      "alias": "Proposer0",
+      "address": "tz1ProposerAddress0"
     },
-    {
-        "hash": "1003",
-        "cycle": 1,
+    "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
         "level": 0,
-        "priority": "3",
-        "timestamp": "2023-01-01T00:03:00Z",
-        "deposit": 0,
-        "reward": 13,
-        "fees": 2,
-        "baker": {
-            "alias": "Baker3",
-            "address": "tz1BakerAddress3"
-        },
-        "producer": {
-            "alias": "Producer3",
-            "address": "tz1ProducerAddress3"
-        },
-        "proposer": {
-            "alias": "Proposer3",
-            "address": "tz1ProposerAddress3"
-        }
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      }
+    ]
+  },
+  {
+    "hash": "1001",
+    "cycle": 1,
+    "level": 0,
+    "priority": "1",
+    "timestamp": "2023-01-01T00:01:00Z",
+    "deposit": 0,
+    "reward": 11,
+    "fees": 2,
+    "baker": {
+      "alias": "Baker1",
+      "address": "tz1BakerAddress1"
     },
-    {
-        "hash": "1004",
-        "cycle": 1,
-        "level": 0,
-        "priority": "4",
-        "timestamp": "2023-01-01T00:04:00Z",
-        "deposit": 0,
-        "reward": 14,
-        "fees": 2,
-        "baker": {
-            "alias": "Baker4",
-            "address": "tz1BakerAddress4"
-        },
-        "producer": {
-            "alias": "Producer1",
-            "address": "tz1ProducerAddress4"
-        },
-        "proposer": {
-            "alias": "Proposer4",
-            "address": "tz1ProposerAddress4"
-        }
+    "producer": {
+      "alias": "Producer1",
+      "address": "tz1ProducerAddress1"
     },
-    {
-        "hash": "1005",
-        "cycle": 1,
-        "level": 0,
-        "priority": "5",
-        "timestamp": "2023-01-01T00:05:00Z",
-        "deposit": 0,
-        "reward": 15,
-        "fees": 2,
-        "baker": {
-            "alias": "Baker5",
-            "address": "tz1BakerAddress5"
-        },
-        "producer": {
-            "alias": "Producer5",
-            "address": "tz1ProducerAddress5"
-        },
-        "proposer": {
-            "alias": "Proposer5",
-            "address": "tz1ProposerAddress5"
-        }
+    "proposer": {
+      "alias": "Proposer1",
+      "address": "tz1ProposerAddress1"
     },
-    {
-        "hash": "1006",
-        "cycle": 1,
+    "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
         "level": 0,
-        "priority": "5",
-        "timestamp": "2023-01-01T00:06:00Z",
-        "deposit": 0,
-        "reward": 16,
-        "fees": 2,
-        "baker": {
-            "alias": "Baker6",
-            "address": "tz1BakerAddress6"
-        },
-        "producer": {
-            "alias": "Producer6",
-            "address": "tz1ProducerAddress6"
-        },
-        "proposer": {
-            "alias": "Proposer6",
-            "address": "tz1ProposerAddress6"
-        }
-    }
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      }
+    ]
+  },
+  {
+    "hash": "1002",
+    "cycle": 1,
+    "level": 0,
+    "priority": "2",
+    "timestamp": "2023-01-01T00:02:00Z",
+    "deposit": 0,
+    "reward": 12,
+    "fees": 2,
+    "baker": {
+      "alias": "Baker2",
+      "address": "tz1BakerAddress2"
+    },
+    "producer": {
+      "alias": "Producer2",
+      "address": "tz1ProducerAddress2"
+    },
+    "proposer": {
+      "alias": "Proposer2",
+      "address": "tz1ProposerAddress2"
+    },
+    "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      }
+    ]
+  },
+  {
+    "hash": "1003",
+    "cycle": 1,
+    "level": 0,
+    "priority": "3",
+    "timestamp": "2023-01-01T00:03:00Z",
+    "deposit": 0,
+    "reward": 13,
+    "fees": 2,
+    "baker": {
+      "alias": "Baker3",
+      "address": "tz1BakerAddress3"
+    },
+    "producer": {
+      "alias": "Producer3",
+      "address": "tz1ProducerAddress3"
+    },
+    "proposer": {
+      "alias": "Proposer3",
+      "address": "tz1ProposerAddress3"
+    },
+    "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      }
+    ]
+  },
+  {
+    "hash": "1004",
+    "cycle": 1,
+    "level": 0,
+    "priority": "4",
+    "timestamp": "2023-01-01T00:04:00Z",
+    "deposit": 0,
+    "reward": 14,
+    "fees": 2,
+    "baker": {
+      "alias": "Baker4",
+      "address": "tz1BakerAddress4"
+    },
+    "producer": {
+      "alias": "Producer1",
+      "address": "tz1ProducerAddress4"
+    },
+    "proposer": {
+      "alias": "Proposer4",
+      "address": "tz1ProposerAddress4"
+    },
+    "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      }
+    ]
+  },
+  {
+    "hash": "1005",
+    "cycle": 1,
+    "level": 0,
+    "priority": "5",
+    "timestamp": "2023-01-01T00:05:00Z",
+    "deposit": 0,
+    "reward": 15,
+    "fees": 2,
+    "baker": {
+      "alias": "Baker5",
+      "address": "tz1BakerAddress5"
+    },
+    "producer": {
+      "alias": "Producer5",
+      "address": "tz1ProducerAddress5"
+    },
+    "proposer": {
+      "alias": "Proposer5",
+      "address": "tz1ProposerAddress5"
+    },
+    "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      }
+    ]
+  },
+  {
+    "hash": "1006",
+    "cycle": 1,
+    "level": 0,
+    "priority": "5",
+    "timestamp": "2023-01-01T00:06:00Z",
+    "deposit": 0,
+    "reward": 16,
+    "fees": 2,
+    "baker": {
+      "alias": "Baker6",
+      "address": "tz1BakerAddress6"
+    },
+    "producer": {
+      "alias": "Producer6",
+      "address": "tz1ProducerAddress6"
+    },
+    "proposer": {
+      "alias": "Proposer6",
+      "address": "tz1ProposerAddress6"
+    },
+    "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      }
+    ]
+  }
 ]
