@@ -2,6 +2,7 @@ package de.showcase.tezos_viewer.domains.block
 
 import Block
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -141,13 +142,15 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
                             ) {
                                 Box(
                                     Modifier
-                                        .background(brush = Brush.horizontalGradient(
-                                            colors = listOf(
-                                                MaterialTheme.colorScheme.secondary,
-                                                MaterialTheme.colorScheme.primary,
-                                                MaterialTheme.colorScheme.primary
-                                            )
-                                        ),)
+                                        .background(
+                                            brush = Brush.horizontalGradient(
+                                                colors = listOf(
+                                                    MaterialTheme.colorScheme.secondary,
+                                                    MaterialTheme.colorScheme.primary,
+                                                    MaterialTheme.colorScheme.primary
+                                                )
+                                            ),
+                                        )
                                         .fillMaxSize()
                                         .weight(0.3f),
                                     contentAlignment = Alignment.Center
@@ -156,7 +159,8 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
                                     TransactionComposable(
                                         dimension = 65.dp,
                                         lineColor = MaterialTheme.colorScheme.inversePrimary,
-                                        textColor = MaterialTheme.colorScheme.outlineVariant)
+                                        textColor = MaterialTheme.colorScheme.outlineVariant
+                                    )
                                 }
 
                                 Box(
@@ -198,43 +202,43 @@ data class TransactionData(
 fun TransactionEntry(
     data: TransactionData,
 ) {
-    Row {
-        Box(
-            contentAlignment = Alignment.Center,
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 12.dp)
+            .fillMaxWidth()
+    ) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
-                .weight(0.3f)
+                .fillMaxWidth()
         ) {
+            Text(
+                text = "name ${data.block}",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.surfaceBright,
+            )
             Text(
                 text = "id ${data.id}",
                 fontSize = 12.sp,
                 color = MaterialTheme.colorScheme.surfaceBright,
             )
         }
-        Box(
-            modifier = Modifier.weight(0.7f)
-        ) {
-            Column {
-                Text(
-                    text = "name ${data.block}",
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.surfaceBright,
-                )
-                Text(
-                    text = "status ${data.status}",
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.surfaceBright,
-                )
-                Text(
-                    text = "level ${data.level}",
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.surfaceBright,
-                )
-                Text(
-                    text = "amount ${data.amount}",
-                    fontSize = 12.sp,
-                    color = MaterialTheme.colorScheme.surfaceBright,
-                )
-            }
+        Column {
+            Text(
+                text = "status ${data.status}",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.surfaceBright,
+            )
+            Text(
+                text = "level ${data.level}",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.surfaceBright,
+            )
+            Text(
+                text = "amount ${data.amount}",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.surfaceBright,
+            )
         }
     }
 }
