@@ -28,7 +28,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -52,7 +51,7 @@ fun BlocksScreen(
     val blocks by blocksViewModel.blocks.collectAsState(emptyList())
     val isPro by blocksViewModel.isPro.collectAsState(false)
 
-    val enableAnimation = false
+    val enableAnimation = true
 
     LaunchedEffect(Unit) {
         blocksViewModel.checkForProAccess()
@@ -83,7 +82,7 @@ fun BlocksScreen(
                         data = BlocksHeaderData(
                             netName = "Mainnet",
                             blocksCount = blocks!!.size,
-                            cycle = blocks!!.first()?.cycle!!,
+                            cycle = blocks!!.first().cycle!!,
                             isPro = isPro
                         )
                     )
@@ -93,7 +92,7 @@ fun BlocksScreen(
                             .fillMaxSize()
                     ) {
                         items(blocks!!.size) { index ->
-                            BlockCard(block = blocks!![index]!!, onTap = onCardTap)
+                            BlockCard(block = blocks!![index], onTap = onCardTap)
                             HorizontalDivider(
                                 color = MaterialTheme.colorScheme.inversePrimary,
                                 thickness = 1.dp
