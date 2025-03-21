@@ -52,6 +52,8 @@ fun BlocksScreen(
     val blocks by blocksViewModel.blocks.collectAsState(emptyList())
     val isPro by blocksViewModel.isPro.collectAsState(false)
 
+    val enableAnimation = false
+
     LaunchedEffect(Unit) {
         blocksViewModel.checkForProAccess()
         blocksViewModel.fetchFromAssets()
@@ -74,10 +76,10 @@ fun BlocksScreen(
                 )
             } else {
                 AnimatedBackground(
-                    enabled = false
+                    enabled = enableAnimation
                 ) {
                     BlocksHeader(
-                        enabled = false,
+                        enabled = enableAnimation,
                         data = BlocksHeaderData(
                             netName = "Mainnet",
                             blocksCount = blocks!!.size,
