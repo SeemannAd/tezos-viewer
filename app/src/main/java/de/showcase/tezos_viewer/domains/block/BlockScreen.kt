@@ -6,31 +6,31 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import de.showcase.tezos_viewer.domains.shared.composables.BlockComposable
 import de.showcase.tezos_viewer.domains.shared.composables.Chip
 
 @Composable
@@ -121,7 +121,10 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
                         )
                     }
 
-                    LazyColumn {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(vertical = 24.dp)
+                    ) {
                         items(block.transactions?.size ?: 0) { index ->
                             val transaction = block.transactions!![index]
                             val transactionData = TransactionData(
@@ -131,11 +134,47 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
                                 status = transaction.status,
                                 amount = transaction.amount
                             )
-                            TransactionEntry(data = transactionData)
-                            HorizontalDivider(
-                                color = MaterialTheme.colorScheme.inversePrimary,
-                                thickness = 1.dp/ 2,
-                            )
+
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                modifier = Modifier.height(100.dp)
+                            ) {
+                                Box(
+                                    Modifier
+                                        .background(brush = Brush.horizontalGradient(
+                                            colors = listOf(
+                                                MaterialTheme.colorScheme.secondary,
+                                                MaterialTheme.colorScheme.primary,
+                                                MaterialTheme.colorScheme.primary
+                                            )
+                                        ),)
+                                        .fillMaxSize()
+                                        .weight(0.3f),
+                                    contentAlignment = Alignment.Center
+
+                                ) {
+                                    BlockComposable(50.dp)
+                                }
+
+                                Box(
+                                    Modifier
+                                        .background(
+                                            brush = Brush.horizontalGradient(
+                                                colors = listOf(
+                                                    MaterialTheme.colorScheme.primary,
+                                                    MaterialTheme.colorScheme.primary,
+                                                    MaterialTheme.colorScheme.secondary
+                                                )
+                                            ),
+                                        )
+                                        .fillMaxSize()
+                                        .weight(0.7f)
+                                ) {
+                                    TransactionEntry(data = transactionData)
+                                }
+                            }
+
+                            Spacer(modifier = Modifier.height(4.dp))
                         }
                     }
                 }
@@ -158,6 +197,7 @@ fun TransactionEntry(
 ) {
     Row {
         Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .weight(0.3f)
         ) {
@@ -167,10 +207,6 @@ fun TransactionEntry(
                 color = MaterialTheme.colorScheme.surfaceBright,
             )
         }
-        VerticalDivider(
-            color = MaterialTheme.colorScheme.inversePrimary,
-            thickness = 1.dp
-        )
         Box(
             modifier = Modifier.weight(0.7f)
         ) {
