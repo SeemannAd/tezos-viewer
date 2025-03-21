@@ -30,7 +30,7 @@ class BlocksService(private val api: Api) {
         )
 
         return try {
-            val response = withTimeout(5000) {
+            val response = withTimeout(api.timeout) {
                 api.ktorClient.get(request.url) {
                     headers {
                         if (checkForProAccess()) {

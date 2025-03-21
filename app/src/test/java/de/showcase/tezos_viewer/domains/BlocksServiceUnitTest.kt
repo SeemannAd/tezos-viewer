@@ -17,6 +17,7 @@ import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.time.Duration.Companion.seconds
 
 class BlocksServiceTest {
     private lateinit var testEnvironment : Environment
@@ -42,8 +43,10 @@ class BlocksServiceTest {
 
             when (request.url.toString()) {
                 testEnvironment.endPointBlocks -> {
+                    val content = responseBody.toByteArray()
+                    val bytes = ByteReadChannel(content = content)
                     respond(
-                        content = ByteReadChannel(content = responseBody.toByteArray()),
+                        content = bytes,
                         status = HttpStatusCode.OK,
                         headers = Headers.build {
                             append("Content-Type", "application/json")
@@ -62,7 +65,7 @@ class BlocksServiceTest {
 
         api = Api(
             environment = testEnvironment,
-            engine = engine
+            engine = engine,
         )
         blocksService = BlocksService(api = api)
     }
