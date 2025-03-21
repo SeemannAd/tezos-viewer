@@ -39,6 +39,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
     val apiKey by viewModel.apiKey.collectAsState("")
 
     val keyboardController = LocalSoftwareKeyboardController.current
+    val enableAnimation = true
 
     Scaffold(
         modifier = Modifier
@@ -46,7 +47,7 @@ fun SettingsScreen(viewModel: SettingsViewModel) {
     ) { innerPadding ->
 
         AnimatedBackground(
-            enabled = false
+            enabled = enableAnimation
         ) {
             Box(
                 modifier = Modifier
