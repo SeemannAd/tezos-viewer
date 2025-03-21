@@ -30,7 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import de.showcase.tezos_viewer.domains.shared.composables.BlockComposable
+import de.showcase.tezos_viewer.domains.shared.composables.TransactionComposable
 import de.showcase.tezos_viewer.domains.shared.composables.Chip
 
 @Composable
@@ -153,7 +153,10 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
                                     contentAlignment = Alignment.Center
 
                                 ) {
-                                    BlockComposable(50.dp)
+                                    TransactionComposable(
+                                        dimension = 65.dp,
+                                        lineColor = MaterialTheme.colorScheme.inversePrimary,
+                                        textColor = MaterialTheme.colorScheme.outlineVariant)
                                 }
 
                                 Box(

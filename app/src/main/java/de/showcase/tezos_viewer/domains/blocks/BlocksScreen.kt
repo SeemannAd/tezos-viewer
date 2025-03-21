@@ -51,7 +51,7 @@ fun BlocksScreen(
     val blocks by blocksViewModel.blocks.collectAsState(emptyList())
     val isPro by blocksViewModel.isPro.collectAsState(false)
 
-    val enableAnimation = true
+    val enableAnimation = false
 
     LaunchedEffect(Unit) {
         blocksViewModel.checkForProAccess()
