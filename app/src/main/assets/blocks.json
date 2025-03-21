@@ -41,6 +41,27 @@
         "level": 0,
         "amount": 0,
         "status": "status2"
+      },
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
       }
     ]
   },
@@ -86,6 +107,26 @@
         "level": 0,
         "amount": 0,
         "status": "status2"
+      }, {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
       }
     ]
   },
@@ -111,6 +152,27 @@
       "address": "tz1ProposerAddress2"
     },
     "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      },
       {
         "id": 9990,
         "block": "block0",
@@ -176,6 +238,27 @@
         "level": 0,
         "amount": 0,
         "status": "status2"
+      },
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
       }
     ]
   },
@@ -201,6 +284,27 @@
       "address": "tz1ProposerAddress4"
     },
     "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      },
       {
         "id": 9990,
         "block": "block0",
@@ -266,6 +370,27 @@
         "level": 0,
         "amount": 0,
         "status": "status2"
+      },
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
       }
     ]
   },
@@ -291,6 +416,27 @@
       "address": "tz1ProposerAddress6"
     },
     "transactions": [
+      {
+        "id": 9990,
+        "block": "block0",
+        "level": 0,
+        "amount": 0,
+        "status": "status"
+      },
+      {
+        "id": 9991,
+        "block": "block1",
+        "level": 0,
+        "amount": 0,
+        "status": "status1"
+      },
+      {
+        "id": 9992,
+        "block": "block2",
+        "level": 0,
+        "amount": 0,
+        "status": "status2"
+      },
       {
         "id": 9990,
         "block": "block0",
