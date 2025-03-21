@@ -19,7 +19,7 @@ import androidx.compose.ui.graphics.Color
 fun AnimatedBackground(
     label: String = "Background Animation [Gradient]",
     enabled: Boolean = true,
-    duration: Int = 5000,
+    duration: Int = 3500,
     colors: List<Color> = listOf(
         MaterialTheme.colorScheme.primary,
         MaterialTheme.colorScheme.secondary,
@@ -52,7 +52,8 @@ fun AnimatedBackground(
     val brush = Brush.linearGradient(gradientColors)
 
     Column(
-        modifier = Modifier.background(brush)
+        modifier = Modifier
+            .background(brush)
     ) {
         content()
     }
