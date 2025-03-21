@@ -122,10 +122,7 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
                     }
 
                     LazyColumn {
-                        return@LazyColumn
-
-                        // @dev ignore null objects for data binding
-                        items(block.transactions!!.size) { index ->
+                        items(block.transactions?.size ?: 0) { index ->
                             val transaction = block.transactions!![index]
                             val transactionData = TransactionData(
                                 id = transaction.id,
@@ -137,7 +134,7 @@ fun BlockScreen(viewModel: BlockViewModel, onBackTap: () -> Unit) {
                             TransactionEntry(data = transactionData)
                             HorizontalDivider(
                                 color = MaterialTheme.colorScheme.inversePrimary,
-                                thickness = 1.dp,
+                                thickness = 1.dp/ 2,
                             )
                         }
                     }
@@ -164,7 +161,11 @@ fun TransactionEntry(
             modifier = Modifier
                 .weight(0.3f)
         ) {
-            Text(text = "${data.id}")
+            Text(
+                text = "id ${data.id}",
+                fontSize = 12.sp,
+                color = MaterialTheme.colorScheme.surfaceBright,
+            )
         }
         VerticalDivider(
             color = MaterialTheme.colorScheme.inversePrimary,
@@ -174,10 +175,26 @@ fun TransactionEntry(
             modifier = Modifier.weight(0.7f)
         ) {
             Column {
-                Text(data.block.toString())
-                Text(data.status.toString())
-                Text(data.level.toString())
-                Text(data.amount.toString())
+                Text(
+                    text = "name ${data.block}",
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                )
+                Text(
+                    text = "status ${data.status}",
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                )
+                Text(
+                    text = "level ${data.level}",
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                )
+                Text(
+                    text = "amount ${data.amount}",
+                    fontSize = 12.sp,
+                    color = MaterialTheme.colorScheme.surfaceBright,
+                )
             }
         }
     }
