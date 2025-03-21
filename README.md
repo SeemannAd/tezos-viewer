@@ -12,28 +12,32 @@ Data provided by [TzKT API](https://api.tzkt.io).
 
 ## Overview
 
-The architecture is build by a agile domain driven approach. The project follows the SOLID developer patter and tries to reduce 
-dependencies to third party libraries and focus in core functionality. 
+The architecture is build by a agile domain driven approach. The project follows the SOLID developer patter and tries to reduce
+dependencies to third party libraries and focus in core functionality.
 
 Please see [Architecture Vision](documention/202503_Tezos_Viewer_Architecture_Vision.pdf)
 
 Current Tech-Stack:
 1. Jetpack Compose
-2. NavHost 
+2. NavHost
 3. Ktor - api client
 4. ModernStorage - google`s fileSystem storage
 5. Mockk - Test Framework for mocking data
 
 ### Domains
 
-The is divided into different domains. Each domain represents a stakeholder epic.  
+The is divided into different domains. Each domain represents a stakeholder epic.
 
 #### Blocks
-Overview of the current state of the Tezos Blockchain. The latest blocks for the current cycle 
-are displayed. 
+Overview of the current state of the Tezos Blockchain. The latest blocks for the current cycle
+are displayed.
 
 #### Block
-Details of a selected Block within the Blockchain. 
+Details of a selected Block within the Blockchain.
 
 #### Settings
 Access user settings like adding Api-Key for PRO access to the Tezos blockchain.
+
+### Testing
+- [turbine](https://github.com/cashapp/turbine) for coroutines as unit-test
+- [mockk](https://github.com/mockk/mockk) for mocking entities
