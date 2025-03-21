@@ -7,13 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.coroutines.withTimeout
 import kotlinx.serialization.json.Json
-import java.util.concurrent.TimeoutException
 
 @SuppressLint("StaticFieldLeak")
 class BlocksViewModel(
@@ -23,7 +20,7 @@ class BlocksViewModel(
 
     val route = "/blocks"
 
-    val blocks: MutableStateFlow<List<Block?>?> = MutableStateFlow(emptyList())
+    val blocks: MutableStateFlow<List<Block>?> = MutableStateFlow(emptyList())
 
     val isPro: MutableStateFlow<Boolean> = MutableStateFlow(blocksService.checkForProAccess())
 
