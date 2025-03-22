@@ -55,8 +55,8 @@ fun BlocksScreen(
 
     LaunchedEffect(Unit) {
         blocksViewModel.checkForProAccess()
-        blocksViewModel.fetchFromAssets()
-        // blocksViewModel.fetchBlocksFromRemote()
+        // blocksViewModel.fetchFromAssets()
+        blocksViewModel.fetchBlocksFromRemote()
     }
     Scaffold(
         modifier = Modifier
@@ -118,7 +118,7 @@ fun BlockCard(block: Block, onTap: (String) -> Unit) {
     ) {
         Row(
             modifier = Modifier
-                .height(100.dp)
+                .height(120.dp)
                 .background(MaterialTheme.colorScheme.primary)
         ) {
             Box(
