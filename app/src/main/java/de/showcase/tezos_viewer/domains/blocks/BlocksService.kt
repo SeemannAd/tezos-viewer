@@ -6,8 +6,10 @@ import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.http.Url
 import io.ktor.http.headers
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
 import kotlinx.coroutines.withTimeout
 import timber.log.Timber
 import java.util.concurrent.TimeoutException
@@ -30,31 +32,31 @@ class BlocksService(private val api: Api) {
         )
 
         return try {
-            val response = withTimeout(api.timeout) {
-                api.ktorClient.get(request.url) {
-                    headers {
-                        if (checkForProAccess()) {
-                            append("Authorization", "Bearer ${request.apiKey}")
+            withContext(Dispatchers.Default.limitedParallelism(1)) {
+                withTimeout(api.timeout) {
+                    api.ktorClient.get(request.url) {
+                        headers {
+                            if (checkForProAccess()) {
+                                append("Authorization", "Bearer ${request.apiKey}")
+                            }
                         }
                     }
                 }
-            }
+            }.let { response ->
+                Timber.d("getBlocks():\nrequest=$request\nresponse=$response")
 
-            Timber.d("getBlocks():\nrequest=$request\nresponse=$response")
+                when (response.status.value) {
+                    200 -> {
+                        return response.body<List<Block>>()
+                    }
 
-            when (response.status.value) {
-                200 -> {
-                    return response.body<List<Block>>()
-                }
+                    429 -> {
+                        throw Exception("${response.status} Rate limit exceeded!")
+                    }
 
-                429 -> {
-                    // https://api.tzkt.io/#section/Get-Started/Free-TzKT-API
-                    // if status code is 429 than rate limit has been exceeded
-                    throw Exception("${response.status} Rate limit exceeded!")
-                }
-
-                else -> {
-                    throw Exception("${response.status} Could not fetch blocks!")
+                    else -> {
+                        throw Exception("${response.status} Could not fetch blocks!")
+                    }
                 }
             }
         } catch (e: TimeoutCancellationException) {

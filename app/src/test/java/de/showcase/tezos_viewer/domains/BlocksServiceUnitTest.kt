@@ -10,19 +10,16 @@ import io.ktor.client.engine.mock.respond
 import io.ktor.http.Headers
 import io.ktor.http.HttpStatusCode
 import io.ktor.utils.io.ByteReadChannel
-import io.mockk.every
-import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.json.Json
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import kotlin.time.Duration.Companion.seconds
 
 class BlocksServiceTest {
-    private lateinit var testEnvironment : Environment
-    private lateinit var  engine:MockEngine
-    private lateinit var  api: Api
+    private lateinit var testEnvironment: Environment
+    private lateinit var engine: MockEngine
+    private lateinit var api: Api
     private lateinit var blocksService: BlocksService
     private val expectedBlocks: List<Block> = listOf(
         Block(
@@ -33,9 +30,6 @@ class BlocksServiceTest {
 
     @Before
     fun before() {
-        val storeDataService = mockk<StoreDataService>()
-        every { storeDataService.read(any()) } returns ""
-
         testEnvironment = Environment()
 
         engine = MockEngine { request ->
