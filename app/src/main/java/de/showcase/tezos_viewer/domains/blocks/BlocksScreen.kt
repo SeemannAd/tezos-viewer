@@ -39,7 +39,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import de.showcase.tezos_viewer.R
-import de.showcase.tezos_viewer.domains.shared.composables.AnimatedBackground
 import de.showcase.tezos_viewer.domains.shared.composables.Chip
 import kotlinx.coroutines.delay
 
@@ -58,45 +57,50 @@ fun BlocksScreen(
         // blocksViewModel.fetchFromAssets()
         blocksViewModel.fetchBlocksFromRemote()
     }
-    Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-    ) { innerPadding ->
+    Scaffold{ innerPadding ->
         Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding),
         ) {
-            if(blocks == null) return@Box
-
-            if (blocks!!.isEmpty()) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.Center)
+            if(blocks == null) {
+                Text(
+                    text = "Could not load blocks.",
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
             } else {
-                AnimatedBackground(
-                    enabled = enableAnimation
-                ) {
-                    BlocksHeader(
-                        enabled = enableAnimation,
-                        data = BlocksHeaderData(
-                            netName = "Mainnet",
-                            blocksCount = blocks!!.size,
-                            cycle = blocks!!.first().cycle!!,
-                            isPro = isPro
-                        )
+                if (blocks!!.isEmpty()) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
                     )
-
-                    LazyColumn(
+                } else {
+                    Column(
                         modifier = Modifier
                             .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.secondary),
+                        verticalArrangement = Arrangement.SpaceAround
                     ) {
-                        items(blocks!!.size) { index ->
-                            BlockCard(block = blocks!![index], onTap = onCardTap)
-                            HorizontalDivider(
-                                color = MaterialTheme.colorScheme.inversePrimary,
-                                thickness = 1.dp
+                        BlocksHeader(
+                            enabled = enableAnimation,
+                            data = BlocksHeaderData(
+                                netName = "Mainnet",
+                                blocksCount = blocks!!.size,
+                                cycle = blocks!!.first().cycle!!,
+                                isPro = isPro
                             )
+                        )
+
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                        ) {
+                            items(blocks!!.size) { index ->
+                                BlockCard(block = blocks!![index], onTap = onCardTap)
+                                HorizontalDivider(
+                                    color = MaterialTheme.colorScheme.inversePrimary,
+                                    thickness = 1.dp
+                                )
+                            }
                         }
                     }
                 }
