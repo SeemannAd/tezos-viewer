@@ -12,10 +12,14 @@ Data provided by [TzKT API](https://api.tzkt.io).
 
 ## Overview
 
-The architecture is build by a agile domain driven approach. The project follows the SOLID developer patter and tries to reduce
-dependencies to third party libraries and focus in core functionality.
+The architecture is follows a agile and domain driven approach. 
 
-Please see [Architecture Vision](documention/202503_Tezos_Viewer_Architecture_Vision.pdf)
+Please see [Architecture Vision](documentation/202503_Tezos_Viewer_Architecture_Vision.pdf)
+
+<div style="text-align: center; margin-top: 30px; margin-bottom: 30px;">
+    <img src="documentation/domains.png" alt="Domains" style="width: 100%; height: auto;"/>
+</div>
+
 
 Current Tech-Stack:
 1. Jetpack Compose

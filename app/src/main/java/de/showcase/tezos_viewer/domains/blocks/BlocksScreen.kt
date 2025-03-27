@@ -54,8 +54,8 @@ fun BlocksScreen(
 
     LaunchedEffect(Unit) {
         blocksViewModel.checkForProAccess()
-        // blocksViewModel.fetchFromAssets()
-        blocksViewModel.fetchBlocksFromRemote()
+        blocksViewModel.fetchFromAssets()
+        // blocksViewModel.fetchBlocksFromRemote()
     }
     Scaffold{ innerPadding ->
         Box(
